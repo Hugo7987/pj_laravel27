@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Models\Base;
+
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * Classe générée automatiquement par db2laravel.
+ *
+ * Ne pas modifier directement cette classe : elle peut être régénérée.
+ */
+abstract class PhotoBase extends Model
+{
+    protected $table = 'photos';
+
+    protected $fillable = [
+        'chemin',
+        'commentaire',
+        'id_utilisateur',
+        'id_classe',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'id' => 'integer',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+            'id_utilisateur' => 'integer',
+            'id_classe' => 'integer',
+        ];
+    }
+
+    public function utilisateur(): BelongsTo
+    {
+        return $this->belongsTo(
+            \App\Models\Utilisateur::class,
+            'id_utilisateur',
+            'id'
+        );
+    }
+
+    public function classe(): BelongsTo
+    {
+        return $this->belongsTo(
+            \App\Models\Classe::class,
+            'id_classe',
+            'id'
+        );
+    }
+}
