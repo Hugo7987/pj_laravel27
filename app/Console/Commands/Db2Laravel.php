@@ -20,8 +20,7 @@ class Db2Laravel extends Command
         DatabaseInspector $inspector,
         ModelNameResolver $nameResolver,
         ModelGenerator $modelGenerator,
-    ): int
-    {
+    ): int {
         $connectionName = $this->option('connection');
 
         $this->info('Analyse de la base de données...');
@@ -29,11 +28,11 @@ class Db2Laravel extends Command
         $database = $inspector->inspect($connectionName);
 
         $this->newLine();
-        $this->line('Connexion : <info>' . $database->connectionName . '</info>');
-        $this->line('Base      : <info>' . $database->databaseName . '</info>');
+        $this->line('Connexion : <info>'.$database->connectionName.'</info>');
+        $this->line('Base      : <info>'.$database->databaseName.'</info>');
         $this->line(
-            'Préfixe   : <info>' .
-            ($database->tablePrefix !== '' ? $database->tablePrefix : '(aucun)') .
+            'Préfixe   : <info>'.
+            ($database->tablePrefix !== '' ? $database->tablePrefix : '(aucun)').
             '</info>'
         );
         $this->newLine();
@@ -60,7 +59,7 @@ class Db2Laravel extends Command
                 }
 
                 if ($column->default !== null) {
-                    $attributes[] = 'DEFAULT ' . $this->formatDefault($column->default);
+                    $attributes[] = 'DEFAULT '.$this->formatDefault($column->default);
                 }
 
                 $this->line(
@@ -88,7 +87,7 @@ class Db2Laravel extends Command
                     }
 
                     $suffix = $attributes !== []
-                        ? ' ' . implode(' ', $attributes)
+                        ? ' '.implode(' ', $attributes)
                         : '';
 
                     $this->line(
@@ -121,15 +120,15 @@ class Db2Laravel extends Command
                     $actions = [];
 
                     if ($foreignKey->onUpdate !== null) {
-                        $actions[] = 'ON UPDATE ' . $foreignKey->onUpdate;
+                        $actions[] = 'ON UPDATE '.$foreignKey->onUpdate;
                     }
 
                     if ($foreignKey->onDelete !== null) {
-                        $actions[] = 'ON DELETE ' . $foreignKey->onDelete;
+                        $actions[] = 'ON DELETE '.$foreignKey->onDelete;
                     }
 
                     if ($actions !== []) {
-                        $this->line('        ' . implode(' / ', $actions));
+                        $this->line('        '.implode(' / ', $actions));
                     }
                 }
             }
@@ -178,7 +177,7 @@ class Db2Laravel extends Command
         }
 
         if (is_string($default)) {
-            return "'" . $default . "'";
+            return "'".$default."'";
         }
 
         return (string) $default;

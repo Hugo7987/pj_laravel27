@@ -4,6 +4,4 @@ namespace App\Models;
 
 use App\Models\Base\PhotoBase;
 
-class Photo extends PhotoBase
-{
-}
+class Photo extends PhotoBase {}

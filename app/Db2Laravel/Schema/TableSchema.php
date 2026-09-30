@@ -10,6 +10,5 @@ final class TableSchema
         public readonly array $columns = [],
         public readonly array $indexes = [],
         public readonly array $foreignKeys = [],
-    ) {
-    }
+    ) {}
 }

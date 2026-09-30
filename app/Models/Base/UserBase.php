@@ -2,6 +2,7 @@
 
 namespace App\Models\Base;
 
+use App\Models\Utilisateur;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -34,7 +35,7 @@ abstract class UserBase extends Model
     public function utilisateur(): HasOne
     {
         return $this->hasOne(
-            \App\Models\Utilisateur::class,
+            Utilisateur::class,
             'id',
             'id'
         );

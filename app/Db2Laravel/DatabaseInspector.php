@@ -34,7 +34,7 @@ class DatabaseInspector
             $physicalName = $tableInfo['name'];
             $name = $this->removePrefix($physicalName, $prefix);
 
-            if (!$this->tableIsIncluded($name)) {
+            if (! $this->tableIsIncluded($name)) {
                 continue;
             }
 
@@ -109,7 +109,7 @@ class DatabaseInspector
 
     private function removePrefix(string $table, string $prefix): string
     {
-        if ($prefix === '' || !str_starts_with($table, $prefix)) {
+        if ($prefix === '' || ! str_starts_with($table, $prefix)) {
             return $table;
         }
 
@@ -121,7 +121,7 @@ class DatabaseInspector
         $include = config('db2laravel.tables.include', []);
         $exclude = config('db2laravel.tables.exclude', []);
 
-        if ($include !== [] && !in_array($table, $include, true)) {
+        if ($include !== [] && ! in_array($table, $include, true)) {
             return false;
         }
 

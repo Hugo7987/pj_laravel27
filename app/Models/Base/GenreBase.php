@@ -2,6 +2,7 @@
 
 namespace App\Models\Base;
 
+use App\Models\Utilisateur;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -36,7 +37,7 @@ abstract class GenreBase extends Model
     public function utilisateurs(): HasMany
     {
         return $this->hasMany(
-            \App\Models\Utilisateur::class,
+            Utilisateur::class,
             'code_genre',
             'code'
         );

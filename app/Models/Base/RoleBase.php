@@ -2,6 +2,7 @@
 
 namespace App\Models\Base;
 
+use App\Models\Utilisateur;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -31,7 +32,7 @@ abstract class RoleBase extends Model
     public function utilisateurs(): HasMany
     {
         return $this->hasMany(
-            \App\Models\Utilisateur::class,
+            Utilisateur::class,
             'id_role',
             'id'
         );

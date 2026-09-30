@@ -41,7 +41,7 @@ final class FrenchSingularizer
         }
 
         if (str_ends_with($word, 'aux')) {
-            return substr($word, 0, -3) . 'al';
+            return substr($word, 0, -3).'al';
         }
 
         /*

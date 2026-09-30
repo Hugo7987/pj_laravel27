@@ -12,6 +12,5 @@ final class ForeignKeySchema
         public readonly array $foreignColumns,
         public readonly ?string $onUpdate = null,
         public readonly ?string $onDelete = null,
-    ) {
-    }
+    ) {}
 }

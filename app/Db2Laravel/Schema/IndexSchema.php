@@ -9,6 +9,5 @@ final class IndexSchema
         public readonly array $columns,
         public readonly bool $unique,
         public readonly bool $primary,
-    ) {
-    }
+    ) {}
 }

@@ -25,6 +25,5 @@ final class ColumnSchema
         public readonly ?string $collation = null,
         public readonly ?string $comment = null,
         public readonly ?array $generation = null,
-    ) {
-    }
+    ) {}
 }

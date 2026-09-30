@@ -8,8 +8,7 @@ final class ModelNameResolver
 {
     public function __construct(
         private readonly FrenchSingularizer $singularizer,
-    ) {
-    }
+    ) {}
 
     public function resolve(string $table): string
     {

@@ -9,6 +9,5 @@ final class DatabaseSchema
         public readonly string $databaseName,
         public readonly string $tablePrefix,
         public readonly array $tables = [],
-    ) {
-    }
+    ) {}
 }

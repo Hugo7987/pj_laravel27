@@ -13,8 +13,7 @@ final class ModelGenerator
 {
     public function __construct(
         private readonly ModelNameResolver $nameResolver,
-    ) {
-    }
+    ) {}
 
     /**
      * @return array{base: string, model: string, model_created: bool}
@@ -31,14 +30,14 @@ final class ModelGenerator
         $baseNamespace = trim(config('db2laravel.models.base_namespace'), '\\');
         $baseSuffix = config('db2laravel.models.base_suffix', 'Base');
 
-        $baseClassName = $modelName . $baseSuffix;
+        $baseClassName = $modelName.$baseSuffix;
 
         $this->ensureDirectory($modelsPath);
 
         if ($baseEnabled) {
             $this->ensureDirectory($basePath);
 
-            $baseFile = $basePath . '/' . $baseClassName . '.php';
+            $baseFile = $basePath.'/'.$baseClassName.'.php';
 
             file_put_contents(
                 $baseFile,
@@ -51,10 +50,10 @@ final class ModelGenerator
                 )
             );
 
-            $modelFile = $modelsPath . '/' . $modelName . '.php';
+            $modelFile = $modelsPath.'/'.$modelName.'.php';
             $created = false;
 
-            if (!is_file($modelFile)) {
+            if (! is_file($modelFile)) {
                 file_put_contents(
                     $modelFile,
                     $this->buildChildModel(
@@ -75,7 +74,7 @@ final class ModelGenerator
             ];
         }
 
-        $modelFile = $modelsPath . '/' . $modelName . '.php';
+        $modelFile = $modelsPath.'/'.$modelName.'.php';
 
         file_put_contents(
             $modelFile,
@@ -181,7 +180,7 @@ PHP;
          * Le préfixe SQL appartient à la connexion Laravel et n'est jamais
          * inscrit dans le modèle.
          */
-        $lines[] = "    protected \$table = " . var_export($table->name, true) . ";";
+        $lines[] = '    protected $table = '.var_export($table->name, true).';';
 
         $primary = $this->primaryIndex($table);
 
@@ -189,31 +188,31 @@ PHP;
             $primaryKey = $primary->columns[0];
 
             if ($primaryKey !== 'id') {
-                $lines[] = "    protected \$primaryKey = " . var_export($primaryKey, true) . ";";
+                $lines[] = '    protected $primaryKey = '.var_export($primaryKey, true).';';
             }
 
             $primaryColumn = $this->column($table, $primaryKey);
 
             if ($primaryColumn !== null) {
-                if (!$primaryColumn->autoIncrement) {
-                    $lines[] = "    public \$incrementing = false;";
+                if (! $primaryColumn->autoIncrement) {
+                    $lines[] = '    public $incrementing = false;';
                 }
 
                 $keyType = $this->eloquentKeyType($primaryColumn);
 
                 if ($keyType !== 'int') {
-                    $lines[] = "    protected \$keyType = " . var_export($keyType, true) . ";";
+                    $lines[] = '    protected $keyType = '.var_export($keyType, true).';';
                 }
             }
         } elseif ($primary !== null && count($primary->columns) > 1) {
             $columns = implode(', ', $primary->columns);
             $lines[] = "    // ATTENTION : clé primaire composite détectée : {$columns}";
-            $lines[] = "    // Eloquent ne gère pas nativement les clés primaires composites.";
-            $lines[] = "    public \$incrementing = false;";
+            $lines[] = '    // Eloquent ne gère pas nativement les clés primaires composites.';
+            $lines[] = '    public $incrementing = false;';
         }
 
-        if (!$this->hasLaravelTimestamps($table)) {
-            $lines[] = "    public \$timestamps = false;";
+        if (! $this->hasLaravelTimestamps($table)) {
+            $lines[] = '    public $timestamps = false;';
         }
 
         $fillable = $this->fillableColumns($table, $primary);
@@ -222,7 +221,7 @@ PHP;
             $items = implode(
                 ",\n",
                 array_map(
-                    static fn (string $name): string => "        " . var_export($name, true),
+                    static fn (string $name): string => '        '.var_export($name, true),
                     $fillable
                 )
             );
@@ -236,8 +235,7 @@ PHP;
             $items = implode(
                 ",\n",
                 array_map(
-                    static fn (string $name, string $cast): string =>
-                        "            " . var_export($name, true) . " => " . var_export($cast, true),
+                    static fn (string $name, string $cast): string => '            '.var_export($name, true).' => '.var_export($cast, true),
                     array_keys($casts),
                     array_values($casts)
                 )
@@ -279,8 +277,7 @@ PHP;
                 static fn (ColumnSchema $column): string => $column->name,
                 array_filter(
                     $table->columns,
-                    static fn (ColumnSchema $column): bool =>
-                        !in_array($column->name, $excluded, true)
+                    static fn (ColumnSchema $column): bool => ! in_array($column->name, $excluded, true)
                         && $column->generation === null
                 )
             )
@@ -339,7 +336,7 @@ PHP;
             $column->type,
             $matches
         ) === 1) {
-            return 'decimal:' . $matches[1];
+            return 'decimal:'.$matches[1];
         }
 
         /*
@@ -397,7 +394,7 @@ PHP;
                     config('db2laravel.models.namespace'),
                     '\\'
                 );
-                $targetClass = '\\' . $targetNamespace . '\\' . $sourceModel;
+                $targetClass = '\\'.$targetNamespace.'\\'.$sourceModel;
 
                 $relationType = $isUnique ? 'HasOne' : 'HasMany';
                 $method = $isUnique ? 'hasOne' : 'hasMany';
@@ -461,7 +458,7 @@ PHP;
             ? Str::camel($model)
             : Str::camel($sourceTable->name);
 
-        return $base . ucfirst($role);
+        return $base.ucfirst($role);
     }
 
     private function buildBelongsToRelations(TableSchema $table): string
@@ -473,6 +470,7 @@ PHP;
             if (count($foreignKey->columns) !== 1 || count($foreignKey->foreignColumns) !== 1) {
                 $columns = implode(', ', $foreignKey->columns);
                 $methods[] = "\n\n    // ATTENTION : relation non générée pour la clé étrangère composite : {$columns}";
+
                 continue;
             }
 
@@ -490,7 +488,7 @@ PHP;
 
             $targetModel = $this->nameResolver->resolve($foreignKey->foreignTable);
             $targetNamespace = trim(config('db2laravel.models.namespace'), '\\');
-            $targetClass = '\\' . $targetNamespace . '\\' . $targetModel;
+            $targetClass = '\\'.$targetNamespace.'\\'.$targetModel;
 
             $methods[] = <<<PHP
 
@@ -527,7 +525,7 @@ PHP;
     {
         $number = 2;
         do {
-            $candidate = $base . $number++;
+            $candidate = $base.$number++;
         } while (isset($usedNames[$candidate]));
 
         return $candidate;
@@ -580,7 +578,7 @@ PHP;
             return;
         }
 
-        if (!mkdir($path, 0775, true) && !is_dir($path)) {
+        if (! mkdir($path, 0775, true) && ! is_dir($path)) {
             throw new RuntimeException(
                 "Impossible de créer le répertoire : {$path}"
             );
