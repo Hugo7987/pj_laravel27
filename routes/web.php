@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TestController;
 use App\Http\resource\views\TestView;
+use App\Http\Controllers\PhotosController;
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
@@ -11,9 +11,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 //Route::view('/', 'welcome')->name('home');
 Route::view('/', "accueil") -> name("home");
-Route::view('produits', "produits") -> name("produitsName");
-Route::view('contact', "contact") -> name("contactName");
 
+Route::view('photos', "photos") -> name("photos");
+Route::view('trombinoscope', "trombinoscope") -> name("trombinoscope");
+Route::view('administration', "administration") -> name("administration");
+
+Route::delete('photos/{photo}', [PhotosController::class, "destroy"])
+    -> middleware('auth')
+    -> middleware('can:photos.delete');
 
 Route::get("/hello", function(){
     return "Vive la France !";

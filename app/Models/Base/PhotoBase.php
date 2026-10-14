@@ -2,8 +2,6 @@
 
 namespace App\Models\Base;
 
-use App\Models\Classe;
-use App\Models\Utilisateur;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -36,7 +34,7 @@ abstract class PhotoBase extends Model
     public function utilisateur(): BelongsTo
     {
         return $this->belongsTo(
-            Utilisateur::class,
+            \App\Models\Utilisateur::class,
             'id_utilisateur',
             'id'
         );
@@ -45,7 +43,7 @@ abstract class PhotoBase extends Model
     public function classe(): BelongsTo
     {
         return $this->belongsTo(
-            Classe::class,
+            \App\Models\Classe::class,
             'id_classe',
             'id'
         );

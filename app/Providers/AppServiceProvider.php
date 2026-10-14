@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
+use Illuminate\Support\Facades\Gate;
+
+use App\Models\Action;
+use App\Models\Utilisateur;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -24,6 +29,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+
+        $actions = Action::pluck('nom');
+
+        foreach($actions as $action){
+            Gate::define(
+                $action,
+                fn(Utilisateur $user) => $user->hasAutorisation($action)
+            );
+        }
     }
 
     /**

@@ -1,4 +1,4 @@
-<x-layouts::pj_laravel27 title="__('Produits')">
+<x-layouts::pj_laravel27 :title="__('Administration')">
 
     <h1 class="text-2x1 font-bold">
         Bienvenue
@@ -10,5 +10,9 @@
     <p>
         Cette application permettra de découvrir progressivement 
         les principales fonctionnalités du framework Laravel.
+    </p>
+    <br><br>
+    <p>
+        Page Administration
     </p>
 </x-layouts::pj_laravel27>

@@ -2,9 +2,6 @@
 
 namespace App\Models\Base;
 
-use App\Models\Enseigner;
-use App\Models\Photo;
-use App\Models\Utilisateur;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -34,7 +31,7 @@ abstract class ClasseBase extends Model
     public function enseigner(): HasMany
     {
         return $this->hasMany(
-            Enseigner::class,
+            \App\Models\Enseigner::class,
             'id_classe',
             'id'
         );
@@ -43,7 +40,7 @@ abstract class ClasseBase extends Model
     public function photos(): HasMany
     {
         return $this->hasMany(
-            Photo::class,
+            \App\Models\Photo::class,
             'id_classe',
             'id'
         );
@@ -52,7 +49,7 @@ abstract class ClasseBase extends Model
     public function utilisateurs(): HasMany
     {
         return $this->hasMany(
-            Utilisateur::class,
+            \App\Models\Utilisateur::class,
             'id_classe',
             'id'
         );

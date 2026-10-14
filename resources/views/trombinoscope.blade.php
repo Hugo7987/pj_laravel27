@@ -1,4 +1,4 @@
-<x-layouts::pj_laravel27 title="__('Contact')">
+<x-layouts::pj_laravel27 :title="__('Trombinoscope')">
 
     <h1 class="text-2x1 font-bold">
         Bienvenue
@@ -11,4 +11,8 @@
         Cette application permettra de découvrir progressivement 
         les principales fonctionnalités du framework Laravel.
     </p>
-</x-layouts.pj_laravel27>
+    <br><br>
+    <p>
+        Page Trombinoscope
+    </p>
+</x-layouts::pj_laravel27>

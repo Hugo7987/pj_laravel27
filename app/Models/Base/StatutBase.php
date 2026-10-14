@@ -2,7 +2,6 @@
 
 namespace App\Models\Base;
 
-use App\Models\Utilisateur;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -37,7 +36,7 @@ abstract class StatutBase extends Model
     public function utilisateurs(): HasMany
     {
         return $this->hasMany(
-            Utilisateur::class,
+            \App\Models\Utilisateur::class,
             'code_statut',
             'code'
         );

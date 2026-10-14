@@ -1,4 +1,4 @@
-<x-layouts::app.horizontal :title="__('Register')">
+<x-layouts::pj_laravel27 :title="__('Register')">
     <div class="flex flex-col gap-6">
         <x-auth-header :title="__('Create an account')" :description="__('Enter your details below to create your account')" />
 
@@ -66,4 +66,4 @@
             <flux:link :href="route('login')" wire:navigate>{{ __('Log in') }}</flux:link>
         </div>
     </div>
-</x-layouts::app.horizontal>
+</x-layouts::pj_laravel>
