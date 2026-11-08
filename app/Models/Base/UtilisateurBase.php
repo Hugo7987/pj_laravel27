@@ -2,6 +2,13 @@
 
 namespace App\Models\Base;
 
+use App\Models\Classe;
+use App\Models\Enseigner;
+use App\Models\Genre;
+use App\Models\Photo;
+use App\Models\Role;
+use App\Models\Statut;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -44,7 +51,7 @@ abstract class UtilisateurBase extends Model
     public function id(): BelongsTo
     {
         return $this->belongsTo(
-            \App\Models\User::class,
+            User::class,
             'id',
             'id'
         );
@@ -53,7 +60,7 @@ abstract class UtilisateurBase extends Model
     public function role(): BelongsTo
     {
         return $this->belongsTo(
-            \App\Models\Role::class,
+            Role::class,
             'id_role',
             'id'
         );
@@ -62,7 +69,7 @@ abstract class UtilisateurBase extends Model
     public function codeStatut(): BelongsTo
     {
         return $this->belongsTo(
-            \App\Models\Statut::class,
+            Statut::class,
             'code_statut',
             'code'
         );
@@ -71,7 +78,7 @@ abstract class UtilisateurBase extends Model
     public function codeGenre(): BelongsTo
     {
         return $this->belongsTo(
-            \App\Models\Genre::class,
+            Genre::class,
             'code_genre',
             'code'
         );
@@ -80,7 +87,7 @@ abstract class UtilisateurBase extends Model
     public function classe(): BelongsTo
     {
         return $this->belongsTo(
-            \App\Models\Classe::class,
+            Classe::class,
             'id_classe',
             'id'
         );
@@ -89,7 +96,7 @@ abstract class UtilisateurBase extends Model
     public function enseigner(): HasMany
     {
         return $this->hasMany(
-            \App\Models\Enseigner::class,
+            Enseigner::class,
             'id_utilisateur',
             'id'
         );
@@ -98,7 +105,7 @@ abstract class UtilisateurBase extends Model
     public function photos(): HasMany
     {
         return $this->hasMany(
-            \App\Models\Photo::class,
+            Photo::class,
             'id_utilisateur',
             'id'
         );

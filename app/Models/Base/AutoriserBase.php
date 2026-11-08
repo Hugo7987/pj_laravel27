@@ -2,6 +2,8 @@
 
 namespace App\Models\Base;
 
+use App\Models\Action;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -38,7 +40,7 @@ abstract class AutoriserBase extends Model
     public function role(): BelongsTo
     {
         return $this->belongsTo(
-            \App\Models\Role::class,
+            Role::class,
             'id_role',
             'id'
         );
@@ -47,7 +49,7 @@ abstract class AutoriserBase extends Model
     public function action(): BelongsTo
     {
         return $this->belongsTo(
-            \App\Models\Action::class,
+            Action::class,
             'id_action',
             'id'
         );

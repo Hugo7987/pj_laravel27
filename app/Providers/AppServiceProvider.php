@@ -2,16 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Action;
+use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
-
-use Illuminate\Support\Facades\Gate;
-
-use App\Models\Action;
-use App\Models\Utilisateur;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,10 +30,12 @@ class AppServiceProvider extends ServiceProvider
 
         $actions = Action::pluck('nom');
 
-        foreach($actions as $action){
+        foreach ($actions as $action) {
             Gate::define(
                 $action,
-                fn(Utilisateur $user) => $user->hasAutorisation($action)
+                function (User $user) use ($action): bool {
+                    return $user->utilisateur?->hasAutorisation($action) ?? false;
+                }
             );
         }
     }

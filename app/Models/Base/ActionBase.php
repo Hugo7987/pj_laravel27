@@ -2,6 +2,7 @@
 
 namespace App\Models\Base;
 
+use App\Models\Autoriser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -31,13 +32,14 @@ abstract class ActionBase extends Model
     public function autoriser(): HasMany
     {
         return $this->hasMany(
-            \App\Models\Autoriser::class,
+            Autoriser::class,
             'id_action',
             'id'
         );
     }
 
-    public function roles(): BelongsToMany{
+    public function roles(): BelongsToMany
+    {
         return $this->belongsToMany(Role::class);
     }
 }
