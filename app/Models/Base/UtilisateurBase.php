@@ -10,6 +10,8 @@ use App\Models\Role;
 use App\Models\Statut;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Classe générée automatiquement par db2laravel.
@@ -34,7 +36,6 @@ abstract class UtilisateurBase extends Model
         'id_role',
         'code_statut',
         'code_genre',
-        'id_classe',
     ];
 
     protected function casts(): array
@@ -44,7 +45,6 @@ abstract class UtilisateurBase extends Model
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
             'id_role' => 'integer',
-            'id_classe' => 'integer',
         ];
     }
 
@@ -88,8 +88,8 @@ abstract class UtilisateurBase extends Model
     {
         return $this->belongsTo(
             Classe::class,
-            'id_classe',
-            'id'
+            'classe',
+            'code'
         );
     }
 

@@ -3,8 +3,10 @@
 namespace App\Models\Base;
 
 use App\Models\Autoriser;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Classe générée automatiquement par db2laravel.
@@ -40,6 +42,6 @@ abstract class ActionBase extends Model
 
     public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class, 'autoriser', 'id_action', 'id_role');
     }
 }

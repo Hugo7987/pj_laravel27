@@ -5,6 +5,7 @@ namespace App\Models\Base;
 use App\Models\Action;
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Classe générée automatiquement par db2laravel.

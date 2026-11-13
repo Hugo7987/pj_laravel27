@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Action;
+use App\Models\Photo;
 use App\Models\User;
+use App\Policies\PhotoPolicy;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -27,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        Gate::policy(Photo::class, PhotoPolicy::class);
 
         $actions = Action::pluck('nom');
 

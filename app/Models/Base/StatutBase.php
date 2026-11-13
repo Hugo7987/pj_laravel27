@@ -4,6 +4,7 @@ namespace App\Models\Base;
 
 use App\Models\Utilisateur;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Classe générée automatiquement par db2laravel.

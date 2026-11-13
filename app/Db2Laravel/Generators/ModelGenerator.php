@@ -103,6 +103,7 @@ final class ModelGenerator
         $body = $this->buildStructuralProperties($table, $modelName);
         $relations = $this->buildBelongsToRelations($table);
         $relations .= $this->buildInverseRelations($table, $database);
+        $relationImports = $this->buildRelationImports($table, $database);
 
         return <<<PHP
 <?php
@@ -110,6 +111,7 @@ final class ModelGenerator
 namespace {$namespace};
 
 use Illuminate\Database\Eloquent\Model;
+{$relationImports}
 
 /**
  * Classe générée automatiquement par db2laravel.
@@ -153,6 +155,7 @@ PHP;
         $body = $this->buildStructuralProperties($table, $modelName);
         $relations = $this->buildBelongsToRelations($table);
         $relations .= $this->buildInverseRelations($table, $database);
+        $relationImports = $this->buildRelationImports($table, $database);
 
         return <<<PHP
 <?php
@@ -160,6 +163,7 @@ PHP;
 namespace {$namespace};
 
 use Illuminate\Database\Eloquent\Model;
+{$relationImports}
 
 class {$modelName} extends Model
 {
@@ -167,6 +171,40 @@ class {$modelName} extends Model
 }
 
 PHP;
+    }
+
+    private function buildRelationImports(
+        TableSchema $table,
+        DatabaseSchema $database,
+    ): string {
+        $imports = [];
+
+        if ($table->foreignKeys !== []) {
+            $imports[] = 'use Illuminate\Database\Eloquent\Relations\BelongsTo;';
+        }
+
+        foreach ($database->tables as $sourceTable) {
+            foreach ($sourceTable->foreignKeys as $foreignKey) {
+                if (
+                    $foreignKey->foreignTable !== $table->name
+                    || count($foreignKey->columns) !== 1
+                    || count($foreignKey->foreignColumns) !== 1
+                ) {
+                    continue;
+                }
+
+                $isUnique = $this->isSingleColumnUnique(
+                    $sourceTable,
+                    $foreignKey->columns[0]
+                );
+
+                $imports[] = $isUnique
+                    ? 'use Illuminate\Database\Eloquent\Relations\HasOne;'
+                    : 'use Illuminate\Database\Eloquent\Relations\HasMany;';
+            }
+        }
+
+        return implode("\n", array_values(array_unique($imports)));
     }
 
     private function buildStructuralProperties(

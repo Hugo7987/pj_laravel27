@@ -5,6 +5,7 @@ namespace App\Models\Base;
 use App\Models\Classe;
 use App\Models\Utilisateur;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Classe générée automatiquement par db2laravel.
@@ -30,7 +31,6 @@ abstract class EnseignerBase extends Model
     {
         return [
             'id_utilisateur' => 'integer',
-            'id_classe' => 'integer',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
@@ -50,7 +50,7 @@ abstract class EnseignerBase extends Model
         return $this->belongsTo(
             Classe::class,
             'id_classe',
-            'id'
+            'code'
         );
     }
 }

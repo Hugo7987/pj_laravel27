@@ -6,6 +6,7 @@ use App\Models\Enseigner;
 use App\Models\Photo;
 use App\Models\Utilisateur;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Classe générée automatiquement par db2laravel.
@@ -36,7 +37,7 @@ abstract class ClasseBase extends Model
         return $this->hasMany(
             Enseigner::class,
             'id_classe',
-            'id'
+            'code'
         );
     }
 
@@ -53,8 +54,8 @@ abstract class ClasseBase extends Model
     {
         return $this->hasMany(
             Utilisateur::class,
-            'id_classe',
-            'id'
+            'classe',
+            'code'
         );
     }
 }
